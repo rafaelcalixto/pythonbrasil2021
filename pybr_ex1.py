@@ -4,7 +4,9 @@ from time import sleep
 
 client = carla.Client("localhost", 2000)
 client.set_timeout(2.0)
-world = client.load_world("Town02")
+world = client.get_world()
+if world.get_map().name != "Town02":
+    world = client.load_world("Town02")
 
 # Escolhendo a posição onde ele será colocado
 spawn_point = choice(world.get_map().get_spawn_points())
@@ -16,7 +18,7 @@ while True:
     vehicle = choice(blueprint_library.filter("vehicle"))
     if int(vehicle.get_attribute("number_of_wheels")) == 4:
         break
-        
+    
 vehicle.set_attribute("role_name", "autopilot")
 if vehicle.has_attribute("color"):
     vehicle.set_attribute("color", choice(vehicle.get_attribute("color").recommended_values))
