@@ -1,10 +1,9 @@
 import carla
 from random import choice
-from time import sleep
 
 client = carla.Client("localhost", 2000)
 client.set_timeout(2.0)
-world = client.get_world()
+world = client.load_world("Town02")
 
 # Escolhendo a posição onde ele será colocado
 spawn_point = choice(world.get_map().get_spawn_points())
